@@ -511,6 +511,7 @@
 </footer>
 
 <script>
+  // 1. 论文数据：pdfUrl 使用仓库中的相对路径（pdfs/xxx.pdf）
   const papers = [
     {
       id: 1,
@@ -521,7 +522,7 @@
       source: "Energy Science（示意）",
       type: "英文 · 模块级旁路设计",
       doi: { url: "https://doi.org/10.1234/example-bypass-2019", label: "10.1234/example-bypass-2019（示例 DOI）" },
-      pdfPath: "大创参考文献/A SOLAR CELL MODULE WITH I... INDEPENDENT BYPASS DIODES_Bao Danwen Gu...nergy Science.pdf",
+      pdfUrl: "pdfs/paper1-bao-bypass-diodes.pdf",
       abstract: "围绕具有独立控制旁路二极管的光伏组件结构展开研究，分析不同旁路策略对组件在局部阴影下的性能表现，并探讨了模块级旁路控制的工程实现路径。",
       tags: ["旁路二极管架构", "阴影容忍度", "组件级设计"]
     },
@@ -534,7 +535,7 @@
       source: "财经界, 2025(26): 6",
       type: "宏观能源 · 政策与形势",
       doi: { url: "https://doi.org/10.19887/j.cnki.cn11-4098/F.2025.26.004", label: "10.19887/j.cnki.cn11-4098/F.2025.26.004" },
-      pdfPath: "c:\\Users\\luo'qing'jing\\AppData\\Roaming\\Cursor\\User\\workspaceStorage\\4478df11c29f08a332492aeb4499114e\\pdfs\\a466fc5d-ab9c-4cca-8c03-f400caf207d3\\“十四五”是能源供应更足、韧性更强的五年_律星光.pdf",
+      pdfUrl: "pdfs/paper2-lvxingguang-energy-14-5.pdf",
       abstract: "从国家层面分析“十四五”期间能源安全、供应韧性与新能源布局，为本项目在“双碳目标”与能源转型的大背景下定位提供政策与战略依据。",
       tags: ["十四五规划", "双碳目标", "能源安全"]
     },
@@ -547,7 +548,7 @@
       source: "期刊/会议示意",
       type: "旁路配置 · 阴影耐受性",
       doi: { url: "https://doi.org/10.1234/example-shadow-2018", label: "10.1234/example-shadow-2018（示例）" },
-      pdfPath: "c:\\Users\\luo'qing'jing\\AppData\\Roaming\\Cursor\\User\\workspaceStorage\\4478df11c29f08a332492aeb4499114e\\pdfs\\8bde6edd-54bc-4996-b73b-e477576cc88a\\不同旁路二极管配置下光伏组件阴影耐受性定量计算_张明锐.pdf",
+      pdfUrl: "pdfs/paper3-zhang-shadow-tolerance.pdf",
       abstract: "通过定量计算不同旁路二极管配置下光伏组件在阴影工况下的功率损失与热斑风险，为本项目中“旁路策略优化”和“阴影耐受性评估”提供理论基础。",
       tags: ["旁路配置优化", "阴影耐受性", "功率损失分析"]
     },
@@ -560,7 +561,7 @@
       source: "国际期刊示意",
       type: "英文 · 失效机理与诊断",
       doi: { url: "https://doi.org/10.1234/example-failure-2017", label: "10.1234/example-failure-2017（示例）" },
-      pdfPath: "c:\\Users\\luo'qing'jing\\AppData\\Roaming\\Cursor\\User\\workspaceStorage\\4478df11c29f08a332492aeb4499114e\\pdfs\\a6e979f1-0e2a-4cce-8a64-a5848be03514\\Analysis and diagnosis of ... failure in c-Si PV module_Yun Ping.pdf",
+      pdfUrl: "pdfs/paper4-yunping-failure-diagnosis.pdf",
       abstract: "针对晶硅光伏组件的失效模式进行分析与诊断，涵盖热斑、焊点开裂、封装老化等，为本项目的“早期故障识别”与“多故障区分”提供参考。",
       tags: ["失效分析", "故障诊断", "晶硅光伏"]
     },
@@ -573,7 +574,7 @@
       source: "硕/博论文示意",
       type: "系统级 · 协同控制与保护",
       doi: { url: "https://doi.org/10.1234/example-dc-plant-2020", label: "10.1234/example-dc-plant-2020（示例）" },
-      pdfPath: "c:\\Users\\luo'qing'jing\\AppData\\Roaming\\Cursor\\User\\workspaceStorage\\4478df11c29f08a332492aeb4499114e\\pdfs\\02cbad55-a505-4572-9314-bb23a362dffe\\光伏全直流汇集系统场站级协同控制保护策略研究_杨伟涛.pdf",
+      pdfUrl: "pdfs/paper5-yang-dc-plant-protection.pdf",
       abstract: "面向全直流汇集系统，研究场站级协同控制与保护策略，为本项目将组件级保护纳入电站整体保护体系提供系统视角。",
       tags: ["全直流汇集", "协同控制", "保护策略"]
     },
@@ -586,7 +587,7 @@
       source: "电子测试（示意）",
       type: "仿真 · 热斑与阵列输出",
       doi: { url: "https://doi.org/10.1234/example-hotspot-sim-2014", label: "10.1234/example-hotspot-sim-2014（示例）" },
-      pdfPath: "c:\\Users\\luo'qing'jing\\AppData\\Roaming\\Cursor\\User\\workspaceStorage\\4478df11c29f08a332492aeb4499114e\\pdfs\\fc090272-ff37-483d-8b04-6e7310a33e5f\\光伏热斑效应及光伏阵列输出特性的仿真分析_业睿.pdf",
+      pdfUrl: "pdfs/paper6-ye-hotspot-simulation.pdf",
       abstract: "通过仿真手段研究不同遮挡与热斑工况下阵列输出特性变化，为本项目中 I–V/P–V 曲线畸变特征提取提供参考。",
       tags: ["热斑仿真", "阵列输出特性", "I–V / P–V 分析"]
     },
@@ -599,7 +600,7 @@
       source: "期刊/会议示意",
       type: "旁路优化 · 阴影工况",
       doi: { url: "https://doi.org/10.1234/example-bypass-opt-2016", label: "10.1234/example-bypass-opt-2016（示例）" },
-      pdfPath: "c:\\Users\\luo'qing'jing\\AppData\\Roaming\\Cursor\\User\\workspaceStorage\\4478df11c29f08a332492aeb4499114e\\pdfs\\7e71d051-74eb-4896-8497-c6f26f877827\\阴影条件下光伏组件旁路二极管优化配置研究_李善寿.pdf",
+      pdfUrl: "pdfs/paper7-li-bypass-optimization.pdf",
       abstract: "从阴影条件出发，系统研究不同旁路二极管配置方案对热斑风险与输出功率的影响，与本项目的 MOSFET 智能旁路形成呼应与对比。",
       tags: ["旁路二极管", "阴影优化", "热斑防护"]
     },
@@ -612,7 +613,7 @@
       source: "太阳能学报（示意）",
       type: "综述 · 智能检测",
       doi: { url: "https://doi.org/10.1234/example-review-2024", label: "10.1234/example-review-2024（示例）" },
-      pdfPath: "c:\\Users\\luo'qing'jing\\AppData\\Roaming\\Cursor\\User\\workspaceStorage\\4478df11c29f08a332492aeb4499114e\\pdfs\\d1847258-6a9a-438c-b161-bbac0b4b3fcc\\光伏组件热斑效应智能化检测的综述及展望_王道累.pdf",
+      pdfUrl: "pdfs/paper8-wang-hotspot-review.pdf",
       abstract: "系统梳理了光伏组件热斑效应的检测技术发展脉络，从红外成像、电信号分析到智能算法，为本项目的“电信号早期诊断 + 机器学习”路线提供重要参考。",
       tags: ["智能检测综述", "电信号诊断", "机器学习"]
     },
@@ -625,7 +626,7 @@
       source: "硕/博论文示意",
       type: "热斑机理 · 实验研究",
       doi: { url: "https://doi.org/10.1234/example-hotspot-2015", label: "10.1234/example-hotspot-2015（示例）" },
-      pdfPath: "c:\\Users\\luo'qing'jing\\AppData\\Roaming\\Cursor\\User\\workspaceStorage\\4478df11c29f08a332492aeb4499114e\\pdfs\\8230f153-a029-420f-bb7e-1794fe8a4bfd\\光伏组件热斑效应研究_黄盛娟.pdf",
+      pdfUrl: "pdfs/paper9-huang-hotspot-study.pdf",
       abstract: "从实验角度深入分析热斑产生机理、温升特性与对组件寿命的影响，为本项目的安全性分析与实验平台搭建提供理论支撑。",
       tags: ["热斑机理", "实验测试", "温升特性"]
     },
@@ -638,7 +639,7 @@
       source: "硕/博论文示意",
       type: "检测方法 · 仿真分析",
       doi: { url: "https://doi.org/10.1234/example-detect-2017", label: "10.1234/example-detect-2017（示例）" },
-      pdfPath: "c:\\Users\\luo'qing'jing\\AppData\\Roaming\\Cursor\\User\\workspaceStorage\\4478df11c29f08a332492aeb4499114e\\pdfs\\0607d2a8-4d8d-48cc-9a17-6d001309cfc6\\光伏组件热斑效应检测及仿真分析_刘雪睛.pdf",
+      pdfUrl: "pdfs/paper10-liuxueqing-detection-simulation.pdf",
       abstract: "将热斑检测方法与仿真模型相结合，探讨不同监测手段的灵敏度与适用场景，为项目的算法验证与仿真平台设计提供参考。",
       tags: ["热斑检测", "仿真分析", "模型验证"]
     }
@@ -646,11 +647,6 @@
 
   const gridEl = document.getElementById('paperGrid');
   let activeId = null;
-
-  function buildFileUrl(winPath) {
-    const url = 'file:///' + winPath.replace(/\\/g, '/');
-    return encodeURI(url);
-  }
 
   function renderCards() {
     gridEl.innerHTML = '';
@@ -742,15 +738,21 @@
       doiLinkEl.style.opacity = '0.6';
     }
 
-    const fileUrl = buildFileUrl(p.pdfPath);
-    pdfIframe.style.display = 'block';
-    pdfPlaceholder.style.display = 'none';
-    pdfIframe.src = fileUrl;
+    if (p.pdfUrl) {
+      pdfIframe.style.display = 'block';
+      pdfPlaceholder.style.display = 'none';
+      pdfIframe.src = p.pdfUrl;
 
-    openPdfBtn.disabled = false;
-    openPdfBtn.onclick = () => {
-      window.open(fileUrl, '_blank');
-    };
+      openPdfBtn.disabled = false;
+      openPdfBtn.onclick = () => {
+        window.open(p.pdfUrl, '_blank');
+      };
+    } else {
+      pdfIframe.style.display = 'none';
+      pdfPlaceholder.style.display = 'block';
+      openPdfBtn.disabled = true;
+      openPdfBtn.onclick = null;
+    }
   }
 
   renderCards();
@@ -758,6 +760,7 @@
     selectPaper(papers[0].id);
   }
 
+  // 趋势图保持不变
   const trendDom = document.getElementById('trendChart');
   const trendChart = echarts.init(trendDom);
   const years = ['2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024'];
@@ -821,4 +824,5 @@
 </body>
 
 </html>
+
 
