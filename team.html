@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>光伏热斑主动防控系统 - 团队与成果</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css">
+  <style>
+    :root {
+      --primary-gradient: linear-gradient(135deg, #0f9bff, #00d28a);
+      --primary-color: #0f9bff;
+      --bg-dark: #050816;
+      --text-main: #f5f7fb;
+      --text-sub: #c0c4d6;
+      --border-soft: rgba(255, 255, 255, 0.08);
+      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.45);
+      --radius-lg: 20px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft YaHei", sans-serif;
+      background: radial-gradient(circle at top, #18253a 0, #050816 45%, #02030a 100%);
+      color: var(--text-main);
+    }
+    a { color: var(--primary-color); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .navbar {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(5, 8, 22, 0.92);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border-soft);
+    }
+    .nav-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 8px;
+      font-weight: 700; font-size: 18px;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      color: transparent;
+      white-space: nowrap;
+    }
+    .nav-logo span.sub {
+      font-size: 11px; font-weight: 400;
+      color: var(--text-sub);
+      background: none;
+      -webkit-background-clip: initial;
+    }
+    .nav-links {
+      display: flex; flex-wrap: wrap;
+      gap: 10px; justify-content: flex-end;
+    }
+    .nav-links a {
+      font-size: 13px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      color: var(--text-sub);
+      border: 1px solid transparent;
+      white-space: nowrap;
+      transition: all 0.18s ease-out;
+    }
+    .nav-links a:hover {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.16);
+      color: var(--text-main);
+    }
+    .nav-links a.active {
+      background: var(--primary-gradient);
+      color: #02030a;
+      font-weight: 600;
+    }
+
+    main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 28px 16px 40px;
+    }
+    section {
+      background:
+        radial-gradient(circle at top left, rgba(15,155,255,0.16), transparent 60%),
+        radial-gradient(circle at bottom right, rgba(0,214,158,0.16), transparent 60%),
+        #050816;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+      padding: 24px 22px 26px;
+    }
+    h1 {
+      margin: 0 0 8px;
+      font-size: 22px;
+      font-weight: 700;
+    }
+    .subtitle {
+      font-size: 13px;
+      color: var(--text-sub);
+      margin-bottom: 14px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.2fr);
+      gap: 18px;
+      margin-top: 4px;
+    }
+    .card {
+      background: rgba(5,8,22,0.92);
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.16);
+      padding: 12px 14px 14px;
+      font-size: 13px;
+    }
+    .card h2 {
+      margin: 0 0 6px;
+      font-size: 16px;
+      display: flex; gap: 6px; align-items: center;
+    }
+    .card h2 i { color: #00e5ff; }
+    .member {
+      margin-bottom: 8px;
+    }
+    .member-name {
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .member-role {
+      font-size: 11px;
+      color: var(--text-sub);
+    }
+    .member-desc {
+      font-size: 12px;
+      color: var(--text-sub);
+      line-height: 1.7;
+    }
+    .p {
+      font-size: 13px;
+      color: var(--text-sub);
+      line-height: 1.7;
+      margin: 4px 0;
+    }
+    .badges {
+      margin-top: 6px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .badge-icon {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(5,8,22,0.9);
+      font-size: 11px;
+      color: var(--text-sub);
+    }
+    .badge-icon i { color: #ffb74d; }
+
+    /* 新增：时间线 */
+    .timeline {
+      margin-top: 8px;
+      border-left: 1px solid rgba(255,255,255,0.24);
+      padding-left: 14px;
+      font-size: 12px;
+      color: var(--text-sub);
+    }
+    .timeline-item {
+      position: relative;
+      padding-bottom: 8px;
+      margin-bottom: 4px;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -7px;
+      top: 4px;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #00e5ff;
+      box-shadow: 0 0 8px rgba(0,229,255,0.7);
+    }
+    .timeline-title {
+      font-weight: 600;
+      color: #e3f2fd;
+      margin-bottom: 2px;
+    }
+    .timeline-time {
+      font-size: 11px;
+      opacity: 0.9;
+    }
+
+    .footer-note {
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--text-sub);
+      text-align: center;
+    }
+    @media (max-width: 840px) {
+      .nav-inner { flex-direction: column; align-items: flex-start; }
+      section { padding: 20px 14px 22px; }
+      .grid { grid-template-columns: minmax(0,1fr); }
+    }
+  </style>
+</head>
+<body>
+<header class="navbar">
+  <div class="nav-inner">
+    <div class="nav-logo">
+      PV Hotspot Guard
+      <span class="sub">NEU 大创项目</span>
+    </div>
+    <nav class="nav-links">
+      <a href="index.html">首页</a>
+      <a href="iv-curve.html">I-V 曲线</a>
+      <a href="hotspot-fluctuation.html">波动热斑</a>
+      <a href="iv-table.html">伏安数据表</a>
+      <a href="papers.html">论文收录</a>
+      <a href="innovation.html">创新对比</a>
+      <a href="roadmap.html">技术路线</a>
+      <a href="dynamic-demo.html">动态演示
+      <a href="team.html" class="active">团队与成果</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section>
+    <h1>团队介绍 · 应用前景 · 预期成果</h1>
+    <p class="subtitle">
+      团队兼具新能源、电力电子、信号处理与软件开发背景，目标是在学术创新与工程落地两个维度同时“拿得出手”。
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <h2><i class="fas fa-users"></i> 指导老师与学生成员</h2>
+
+        <div class="member">
+          <div class="member-name">苑轶 副教授 / 博导（指导老师）</div>
+          <div class="member-role">研究方向：新能源发电并网、电力电子、智能运维</div>
+          <div class="member-desc">
+            参与并主持多项新能源与电力电子相关项目，在光伏并网控制、故障诊断与系统仿真方面具有丰富积累，
+            指导团队从“工程可行性”和“科研创新性”两个维度统筹项目设计。
+          </div>
+        </div>
+
+        <div class="member">
+          <div class="member-name">龙泓宇（负责人）</div>
+          <div class="member-role">总体方案 · 算法与硬件协同</div>
+          <div class="member-desc">
+            负责项目总体架构与关键算法设计，统筹实验方案、任务分工与进度管控；多次参加过竞赛，
+            对电力电子与控制算法均有实践基础。
+          </div>
+        </div>
+
+        <div class="member">
+          <div class="member-name">罗庆景</div>
+          <div class="member-role">数据采集系统 · I–V 曲线建模与可视化</div>
+          <div class="member-desc">
+            负责 I–V 采集平台搭建、数据清洗与特征工程，并完成本项目可视化展示网页设计与实现，
+            将工程数据以图形化方式直观呈现给评审与运维人员。
+          </div>
+        </div>
+
+        <div class="member">
+          <div class="member-name">梁皓然</div>
+          <div class="member-role">硬件实现 · MOSFET 旁路驱动</div>
+          <div class="member-desc">
+            负责功率级电路、MOSFET 旁路支路与 PWM 驱动电路设计，以及样机焊接、调试与测试，
+            确保算法与控制策略可以在真实硬件上稳定运行。
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2><i class="fas fa-medal"></i> 应用前景 · 预期成果 · 项目进展</h2>
+
+        <p class="p">
+          <b>应用前景：</b>
+          项目可作为组件级 / 接线盒级智能防护模块，服务于大型地面电站、工商业屋顶和户用分布式光伏，
+          有望降低热斑引起的故障率，提升电站全寿命周期发电收益，服务“双碳目标”和新型电力系统建设。
+        </p>
+
+        <div class="badges">
+          <span class="badge-icon">
+            <i class="fas fa-file-signature"></i>
+            已申请发明专利 1 项（示意）
+          </span>
+          <span class="badge-icon">
+            <i class="fas fa-book-open-reader"></i>
+            发表高水平论文 1 篇（示意）
+          </span>
+          <span class="badge-icon">
+            <i class="fas fa-trophy"></i>
+            获省级及以上竞赛奖项（示意）
+          </span>
+        </div>
+
+        <p class="p">
+          <b>预期成果：</b>
+          （1）可重复使用的光伏热斑实验与仿真平台；（2）一套电信号早期诊断与智能旁路控制策略库；
+          （3）具备展示与工程推广价值的组件级防护样机，为后续纵向课题与企业合作打下基础。
+        </p>
+
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-title">立项与方案论证</div>
+            <div class="timeline-time">阶段 1 · 完成</div>
+            <div>完成背景调研、方案比选与初步系统架构设计，明确技术路线与实验条件需求。</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-title">实验平台与原型搭建</div>
+            <div class="timeline-time">阶段 2 · 进行中</div>
+            <div>搭建 I–V 采集与波动热斑模拟平台，完成 MOSFET 旁路样机设计与初步调试，积累多工况实验数据。</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-title">算法优化与样机迭代</div>
+            <div class="timeline-time">阶段 3 · 计划</div>
+            <div>基于采集数据训练与优化诊断模型，完善自适应 PWM 控制策略，进行多轮样机迭代测试与可靠性验证。</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-title">成果凝练与推广应用</div>
+            <div class="timeline-time">阶段 4 · 计划</div>
+            <div>完成专利与论文撰写，面向教学示范电站和企业合作电站进行小规模试用与展示，为后续转化探索路径。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-note">
+      项目致力于在光伏电站安全运维、智能运维与双碳目标实现方面形成可复制、可推广的标杆示例。
+    </div>
+  </section>
+</main>
+</body>
+</html>

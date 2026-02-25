@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>光伏热斑主动防控系统 - 技术路线</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css">
+  <style>
+    :root {
+      --primary-gradient: linear-gradient(135deg, #0f9bff, #00d28a);
+      --primary-color: #0f9bff;
+      --secondary-color: #00d28a;
+      --bg-dark: #050816;
+      --text-main: #f5f7fb;
+      --text-sub: #c0c4d6;
+      --border-soft: rgba(255, 255, 255, 0.08);
+      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.45);
+      --radius-lg: 20px;
+      --accent: #ffb74d;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft YaHei", sans-serif;
+      background:
+        radial-gradient(circle at top, #1b2b46 0, #050816 45%, #02030a 100%),
+        repeating-linear-gradient(135deg, rgba(255,255,255,0.04) 0, rgba(255,255,255,0.04) 1px, transparent 1px, transparent 6px);
+      color: var(--text-main);
+    }
+    a { color: var(--primary-color); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .navbar {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(5, 8, 22, 0.92);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border-soft);
+    }
+    .nav-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 8px;
+      font-weight: 700; font-size: 18px;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      color: transparent;
+      white-space: nowrap;
+    }
+    .nav-logo span.sub {
+      font-size: 11px; font-weight: 400;
+      color: var(--text-sub);
+      background: none;
+      -webkit-background-clip: initial;
+    }
+    .nav-links {
+      display: flex; flex-wrap: wrap;
+      gap: 10px; justify-content: flex-end;
+    }
+    .nav-links a {
+      font-size: 13px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      color: var(--text-sub);
+      border: 1px solid transparent;
+      white-space: nowrap;
+      transition: all 0.18s ease-out;
+    }
+    .nav-links a:hover {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.16);
+      color: var(--text-main);
+    }
+    .nav-links a.active {
+      background: var(--primary-gradient);
+      color: #02030a;
+      font-weight: 600;
+    }
+
+    main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 24px 16px 40px;
+    }
+    section {
+      background:
+        radial-gradient(circle at top left, rgba(15,155,255,0.2), transparent 60%),
+        radial-gradient(circle at bottom right, rgba(0,214,158,0.18), transparent 60%),
+        #050816;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+      padding: 20px 18px 22px;
+    }
+
+    .tagline {
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-sub);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .tagline span.dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--secondary-color);
+      box-shadow: 0 0 10px rgba(0,214,158,0.8);
+    }
+    h1 {
+      margin: 0 0 6px;
+      font-size: 22px;
+      font-weight: 750;
+    }
+    .subtitle {
+      font-size: 13px;
+      color: var(--text-sub);
+      margin-bottom: 14px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.8fr) minmax(0, 1.2fr);
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 10px;
+    }
+    .step {
+      background: rgba(5,8,22,0.95);
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.18);
+      padding: 9px 9px 10px;
+      font-size: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: stepIn 0.5s ease-out forwards;
+    }
+    .step:nth-child(1) { animation-delay: 0.05s; }
+    .step:nth-child(2) { animation-delay: 0.12s; }
+    .step:nth-child(3) { animation-delay: 0.19s; }
+    .step:nth-child(4) { animation-delay: 0.26s; }
+    .step:nth-child(5) { animation-delay: 0.33s; }
+    .step:nth-child(6) { animation-delay: 0.40s; }
+
+    .step:hover {
+      border-color: rgba(15,155,255,0.7);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.7);
+      transform: translateY(-2px);
+      transition: all 0.16s ease-out;
+    }
+
+    .step-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 2px;
+    }
+    .step-index {
+      width: 20px; height: 20px;
+      border-radius: 999px;
+      background: rgba(15,155,255,0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: var(--primary-color);
+      font-weight: 600;
+    }
+    .step-title {
+      font-weight: 600;
+      font-size: 12px;
+    }
+    .step-icon {
+      margin-left: auto;
+      color: var(--secondary-color);
+      font-size: 12px;
+    }
+    .step-desc {
+      color: var(--text-sub);
+      line-height: 1.6;
+    }
+
+    @keyframes stepIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .right-card {
+      border-radius: 16px;
+      background: rgba(5,8,22,0.95);
+      border: 1px solid rgba(255,255,255,0.18);
+      padding: 10px 12px 12px;
+      font-size: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .right-card h2 {
+      margin: 0 0 4px;
+      font-size: 15px;
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+    .right-card h2 i { color: var(--accent); }
+    .right-card p {
+      margin: 0;
+      color: var(--text-sub);
+      line-height: 1.7;
+    }
+
+    .loop-diagram {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+      font-size: 11px;
+    }
+    .loop-node {
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: rgba(15,155,255,0.16);
+      border: 1px solid rgba(255,255,255,0.18);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .loop-arrow {
+      color: var(--text-sub);
+      align-self: center;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 8px;
+      margin-top: 2px;
+    }
+    .metric-card {
+      background: rgba(5,8,22,0.9);
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.18);
+      padding: 6px 8px;
+      font-size: 11px;
+    }
+    .metric-label {
+      color: var(--text-sub);
+      margin-bottom: 2px;
+    }
+    .metric-value {
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .metric-note {
+      font-size: 10px;
+      color: var(--text-sub);
+    }
+
+    @media (max-width: 900px) {
+      .steps { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    }
+    @media (max-width: 700px) {
+      .layout { grid-template-columns: minmax(0,1fr); }
+      .steps { grid-template-columns: minmax(0,1fr); }
+    }
+    @media (max-width: 840px) {
+      .nav-inner { flex-direction: column; align-items: flex-start; }
+      section { padding: 18px 12px 20px; }
+    }
+  </style>
+</head>
+<body>
+<header class="navbar">
+  <div class="nav-inner">
+    <div class="nav-logo">
+      PV Hotspot Guard
+      <span class="sub">东北大学 第二十批大学生创新训练项目</span>
+    </div>
+    <nav class="nav-links">
+      <a href="index.html">首页</a>
+      <a href="iv-curve.html">I-V 曲线</a>
+      <a href="hotspot-fluctuation.html">波动热斑</a>
+      <a href="iv-table.html">伏安数据表</a>
+      <a href="papers.html">论文收录</a>
+      <a href="innovation.html">创新对比</a>
+      <a href="roadmap.html" class="active">技术路线</a>
+      <a href="dynamic-demo.html">动态演示</a>
+      <a href="team.html">团队与成果</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section>
+    <div class="tagline">
+      <span class="dot"></span>
+      东北大学第二十批大创项目 · 中期答辩展示
+    </div>
+    <h1>技术路线：从电信号到智能旁路的闭环</h1>
+    <p class="subtitle">
+      技术路线围绕“感知–决策–执行”三大环节展开，细化为六个步骤，从 I–V 数据采集到 MOSFET 旁路执行，
+      构建可落地的光伏热斑主动防控闭环。
+    </p>
+
+    <div class="layout">
+      <div class="steps">
+        <div class="step">
+          <div class="step-header">
+            <div class="step-index">1</div>
+            <div class="step-title">数据采集（组件/子串级）</div>
+            <i class="fas fa-database step-icon"></i>
+          </div>
+          <div class="step-desc">
+            在组件或子串级布置电流、电压传感器，采集 I–V 曲线及功率数据，覆盖典型工况（晴天、阴天、遮挡、老化等），
+            为后续建模与诊断提供高质量训练与验证数据。
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-header">
+            <div class="step-index">2</div>
+            <div class="step-title">I–V 曲线分析与特征提取</div>
+            <i class="fas fa-chart-area step-icon"></i>
+          </div>
+          <div class="step-desc">
+            在线重构 I–V / P–V 曲线，提取开路电压、短路电流、最大功率点、电流台阶位置、曲线斜率等特征，
+            形成对热斑敏感的“特征向量”用于后续 AI 诊断。
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-header">
+            <div class="step-index">3</div>
+            <div class="step-title">机器学习诊断与风险分级</div>
+            <i class="fas fa-brain step-icon"></i>
+          </div>
+          <div class="step-desc">
+            结合监督/半监督学习，将特征向量映射为“正常、轻度、中度、严重热斑”等风险等级，
+            并通过在线更新/迁移学习提升在不同电站与环境条件下的鲁棒性。
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-header">
+            <div class="step-index">4</div>
+            <div class="step-title">风险等级到控制策略映射</div>
+            <i class="fas fa-signal step-icon"></i>
+          </div>
+          <div class="step-desc">
+            将诊断结果与预先设定的控制策略表关联，给出不同等级对应的最大允许电流、降载比例以及旁路占空比上限，
+            形成可解释、可调参与的“策略库”。
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-header">
+            <div class="step-index">5</div>
+            <div class="step-title">自适应 PWM 生成与调制</div>
+            <i class="fas fa-waveform-lines step-icon"></i>
+          </div>
+          <div class="step-desc">
+            由 MCU/FPGA 根据实时风险等级与策略库生成 PWM 信号，在频率、占空比上自适应调整，实现从“轻微限流”到“完全旁路”的多级控制。
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-header">
+            <div class="step-index">6</div>
+            <div class="step-title">MOSFET 旁路执行与反馈</div>
+            <i class="fas fa-microchip step-icon"></i>
+          </div>
+          <div class="step-desc">
+            采用低导通电阻 MOSFET 作为旁路开关，按单元/子串级别执行旁路操作，并实时监测动作效果，将结果反馈至诊断模块，
+            形成“自校正”的闭环。
+          </div>
+        </div>
+      </div>
+
+      <div class="right-card">
+        <h2><i class="fas fa-route"></i> 一句话版闭环图解</h2>
+        <p>
+          用一句话概括整个技术路线：<b>用电信号看懂光伏组件在做什么 → 用算法判断是否有热斑风险 →
+          用智能旁路在不牺牲太多发电量的前提下帮它“绕开危险区域”。</b>
+        </p>
+
+        <div class="loop-diagram">
+          <span class="loop-node"><i class="fas fa-database"></i> 感知（I–V / P–V 数据）</span>
+          <span class="loop-arrow"><i class="fas fa-arrow-right"></i></span>
+          <span class="loop-node"><i class="fas fa-brain"></i> 决策（AI 诊断 + 策略）</span>
+          <span class="loop-arrow"><i class="fas fa-arrow-right"></i></span>
+          <span class="loop-node"><i class="fas fa-microchip"></i> 执行（PWM + MOSFET 旁路）</span>
+          <span class="loop-arrow"><i class="fas fa-arrow-rotate-left"></i></span>
+          <span class="loop-node"><i class="fas fa-sync-alt"></i> 反馈与自校正</span>
+        </div>
+
+        <div class="metrics">
+          <div class="metric-card">
+            <div class="metric-label">预警准确率（示意）</div>
+            <div class="metric-value">&gt; 95%</div>
+            <div class="metric-note">在实验平台多工况数据集上，对热斑风险等级判别的正确率。</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">响应时间（示意）</div>
+            <div class="metric-value">&lt; 10 ms</div>
+            <div class="metric-note">从电信号异常被检测到 PWM 信号下发的端到端延迟。</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">功率保持率（示意）</div>
+            <div class="metric-value">&gt; 85%</div>
+            <div class="metric-note">在典型遮挡工况下，相比简单整串旁路方案的输出功率保持水平。</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">模块集成度</div>
+            <div class="metric-value">组件/接线盒级</div>
+            <div class="metric-note">可作为智能防护模块嵌入现有光伏系统，支持扩展与升级。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>光伏热斑主动防控系统 - 论文收录</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- ECharts -->
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.0/dist/echarts.min.js"></script>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css">
+  <style>
+    :root {
+      --primary-gradient: linear-gradient(135deg, #0f9bff, #00d28a);
+      --primary-color: #0f9bff;
+      --secondary-color: #00d28a;
+      --bg-dark: #050816;
+      --text-main: #f5f7fb;
+      --text-sub: #c0c4d6;
+      --border-soft: rgba(255, 255, 255, 0.08);
+      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.45);
+      --radius-lg: 20px;
+      --accent: #ffb74d;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft YaHei", sans-serif;
+      background:
+        radial-gradient(circle at top, #1b2b46 0, #050816 45%, #02030a 100%),
+        repeating-linear-gradient(135deg, rgba(255,255,255,0.04) 0, rgba(255,255,255,0.04) 1px, transparent 1px, transparent 6px);
+      color: var(--text-main);
+    }
+    a { color: var(--primary-color); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .navbar {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(5, 8, 22, 0.9);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border-soft);
+      transition: background 0.2s ease, box-shadow 0.2s ease;
+    }
+    .navbar.shrink {
+      background: rgba(5, 8, 22, 0.96);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+    }
+    .nav-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 8px;
+      font-weight: 700; font-size: 18px;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      color: transparent;
+      white-space: nowrap;
+    }
+    .nav-logo span.sub {
+      font-size: 11px; font-weight: 400;
+      color: var(--text-sub);
+      background: none;
+      -webkit-background-clip: initial;
+    }
+    .nav-links {
+      display: flex; flex-wrap: wrap;
+      gap: 10px; justify-content: flex-end;
+    }
+    .nav-links a {
+      font-size: 13px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      color: var(--text-sub);
+      border: 1px solid transparent;
+      white-space: nowrap;
+      transition: all 0.18s ease-out;
+    }
+    .nav-links a:hover {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.16);
+      color: var(--text-main);
+    }
+    .nav-links a.active {
+      background: var(--primary-gradient);
+      color: #02030a;
+      font-weight: 600;
+    }
+
+    main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 24px 16px 40px;
+    }
+    section {
+      background:
+        radial-gradient(circle at top left, rgba(15,155,255,0.2), transparent 60%),
+        radial-gradient(circle at bottom right, rgba(0,214,158,0.18), transparent 60%),
+        #050816;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+      padding: 20px 18px 22px;
+    }
+
+    .tagline {
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-sub);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .tagline span.dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--secondary-color);
+      box-shadow: 0 0 10px rgba(0,214,158,0.8);
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: 22px;
+      font-weight: 750;
+    }
+    .subtitle {
+      font-size: 13px;
+      color: var(--text-sub);
+      margin-bottom: 14px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.8fr);
+      gap: 18px;
+      margin-top: 6px;
+    }
+
+    .paper-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .paper-card {
+      position: relative;
+      border-radius: 16px;
+      background: radial-gradient(circle at top left, rgba(15,155,255,0.22), rgba(0,0,0,0.9)),
+                  radial-gradient(circle at bottom right, rgba(0,214,158,0.22), rgba(0,0,0,0.9));
+      border: 1px solid rgba(255,255,255,0.16);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+      padding: 10px 10px 11px;
+      cursor: pointer;
+      overflow: hidden;
+      display: flex;
+      gap: 8px;
+      transition: transform 0.18s ease-out, box-shadow 0.18s ease-out, border-color 0.18s ease-out;
+    }
+    .paper-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 30px rgba(0, 0, 0, 0.8);
+      border-color: rgba(15,155,255,0.65);
+    }
+    .paper-card.active {
+      border-color: var(--accent);
+      box-shadow: 0 18px 38px rgba(255, 183, 77, 0.45);
+    }
+
+    .paper-cover {
+      flex: 0 0 44px;
+      height: 64px;
+      border-radius: 10px;
+      background: conic-gradient(from 160deg, #00e5ff, #00d28a, #5c6bc0, #00e5ff);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #02030a;
+      font-weight: 800;
+      font-size: 16px;
+      text-shadow: 0 0 6px rgba(255,255,255,0.7);
+    }
+    .paper-cover span.pdf-badge {
+      position: absolute;
+      bottom: 4px;
+      right: 4px;
+      font-size: 9px;
+      background: rgba(5,8,22,0.9);
+      color: #f5f7fb;
+      padding: 1px 5px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.4);
+    }
+
+    .paper-meta {
+      flex: 1;
+      min-width: 0;
+    }
+    .paper-title {
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 2px;
+      line-height: 1.4;
+    }
+    .paper-authors {
+      font-size: 11px;
+      color: var(--text-sub);
+      margin-bottom: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .paper-extra {
+      font-size: 10px;
+      color: var(--text-sub);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .pill {
+      font-size: 10px;
+      padding: 1px 6px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.25);
+      background: rgba(5,8,22,0.9);
+      color: var(--text-sub);
+    }
+
+    .detail-panel {
+      border-radius: 16px;
+      background: rgba(5,8,22,0.95);
+      border: 1px solid rgba(255,255,255,0.18);
+      padding: 11px 11px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      min-height: 320px;
+    }
+    .detail-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .detail-header-main {
+      flex: 1;
+      min-width: 0;
+    }
+    .detail-label {
+      font-size: 11px;
+      color: var(--accent);
+      margin-bottom: 2px;
+    }
+    .detail-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .detail-info {
+      font-size: 11px;
+      color: var(--text-sub);
+      line-height: 1.5;
+    }
+    .detail-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.24);
+      background: rgba(0,0,0,0.4);
+      color: var(--text-main);
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.16s ease-out;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .btn:hover {
+      background: var(--primary-gradient);
+      border-color: transparent;
+      color: #02030a;
+      text-decoration: none;
+    }
+    .btn i { font-size: 11px; }
+
+    .detail-abstract {
+      font-size: 11px;
+      color: var(--text-sub);
+      line-height: 1.7;
+    }
+    .detail-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 2px;
+    }
+    .detail-tag {
+      font-size: 10px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: rgba(15,155,255,0.16);
+      border: 1px solid rgba(255,255,255,0.18);
+      color: var(--text-sub);
+    }
+
+    .pdf-viewer {
+      margin-top: 4px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: radial-gradient(circle at top, rgba(15,155,255,0.16), rgba(0,0,0,0.95));
+      min-height: 260px;
+    }
+    .pdf-placeholder {
+      padding: 20px 10px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-sub);
+    }
+    .pdf-iframe {
+      width: 100%;
+      height: 420px;
+      border: none;
+      display: none;
+      background: #000;
+    }
+
+    .trend-section {
+      margin-top: 14px;
+      border-radius: 14px;
+      background: rgba(5,8,22,0.95);
+      border: 1px solid rgba(255,255,255,0.16);
+      padding: 10px 11px 12px;
+      font-size: 12px;
+    }
+    .trend-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+    .trend-header i { color: var(--secondary-color); }
+    .trend-sub {
+      font-size: 11px;
+      color: var(--text-sub);
+      margin-bottom: 4px;
+    }
+    #trendChart {
+      width: 100%;
+      height: 150px;
+    }
+
+    .back-to-top {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: rgba(5,8,22,0.98);
+      border: 1px solid rgba(255,255,255,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-main);
+      cursor: pointer;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.7);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: all 0.18s ease-out;
+      z-index: 200;
+    }
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .back-to-top i { font-size: 14px; }
+
+    footer {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 16px 12px;
+      font-size: 11px;
+      color: var(--text-sub);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    @media (max-width: 960px) {
+      .layout {
+        grid-template-columns: minmax(0,1fr);
+      }
+      .detail-panel {
+        order: -1;
+      }
+    }
+    @media (max-width: 840px) {
+      .nav-inner { flex-direction: column; align-items: flex-start; }
+      section { padding: 18px 12px 20px; }
+      .paper-grid { grid-template-columns: minmax(0,1fr); }
+    }
+  </style>
+</head>
+<body>
+<header class="navbar" id="navbar">
+  <div class="nav-inner">
+    <div class="nav-logo">
+      PV Hotspot Guard
+      <span class="sub">东北大学 第二十批大学生创新训练项目</span>
+    </div>
+    <nav class="nav-links">
+      <a href="index.html">首页</a>
+      <a href="iv-curve.html">I-V 曲线</a>
+      <a href="hotspot-fluctuation.html">波动热斑</a>
+      <a href="iv-table.html">伏安数据表</a>
+      <a href="papers.html" class="active">论文收录</a>
+      <a href="innovation.html">创新对比</a>
+      <a href="roadmap.html">技术路线</a>
+      <a href="dynamic-demo.html">动态演示
+      <a href="team.html">团队与成果</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section>
+    <div class="tagline">
+      <span class="dot"></span>
+      东北大学第二十批大创项目 · 中期答辩展示
+    </div>
+    <h1>光伏热斑与旁路策略相关论文收录</h1>
+    <p class="subtitle">
+      收录 10 篇围绕光伏组件热斑效应、旁路二极管配置、故障诊断及新能源系统协同控制的代表性工作。
+      左侧为论文卡片，右侧为详细信息与 PDF 预览。
+    </p>
+
+    <div class="layout">
+      <div class="paper-grid" id="paperGrid"></div>
+
+      <div class="detail-panel">
+        <div class="detail-header">
+          <div class="detail-header-main">
+            <div class="detail-label">论文详情 · 点击左侧卡片进行切换</div>
+            <div class="detail-title" id="detailTitle">请从左侧选择一篇论文</div>
+            <div class="detail-info" id="detailInfo">
+              包含作者、年份、期刊/会议、DOI 以及简要摘要说明。选中后可在下方直接预览 PDF 或在新标签页中打开原文。
+            </div>
+          </div>
+          <div class="detail-actions">
+            <button class="btn" id="openPdfBtn" disabled>
+              <i class="fas fa-file-pdf"></i>
+              在新标签打开 PDF
+            </button>
+            <a class="btn" id="doiLink" href="javascript:void(0)" target="_blank" style="pointer-events:none;opacity:0.6;">
+              <i class="fas fa-link"></i>
+              打开 DOI（示例或真实）
+            </a>
+          </div>
+        </div>
+
+        <div class="detail-abstract" id="detailAbstract"></div>
+        <div class="detail-tags" id="detailTags"></div>
+
+        <div class="pdf-viewer">
+          <iframe id="pdfIframe" class="pdf-iframe"></iframe>
+          <div id="pdfPlaceholder" class="pdf-placeholder">
+            <i class="fas fa-file-pdf" style="color:#ef5350;margin-bottom:4px;"></i><br>
+            选择左侧任意论文后，将在此区域尝试内嵌预览本地 PDF 文件。<br>
+            如浏览器不支持本地预览，可使用上方按钮在新标签页中打开。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="trend-section">
+      <div class="trend-header">
+        <i class="fas fa-chart-area"></i>
+        <span>相关研究趋势 · 历年光伏热斑与旁路相关发文量（示意）</span>
+      </div>
+      <div class="trend-sub">
+        统计近十年“hot-spot / bypass diode / PV fault diagnosis”等关键词文献数量（示意数据），表明该方向持续升温。
+      </div>
+      <div id="trendChart"></div>
+    </div>
+  </section>
+</main>
+
+<div class="back-to-top" id="backToTop">
+  <i class="fas fa-arrow-up"></i>
+</div>
+
+<footer>
+  <span>项目邮箱：example@stu.neu.edu.cn（示意） · 最后更新：2026-02-25</span>
+  <span>© 东北大学 光伏热斑主动防控大创项目</span>
+</footer>
+
+<script>
+  const papers = [
+    {
+      id: 1,
+      shortLetter: "A",
+      title: "A Solar Cell Module with Independently Controlled Bypass Diodes",
+      authors: "Bao Danwen, Gu ..., 等",
+      year: "2019（示意）",
+      source: "Energy Science（示意）",
+      type: "英文 · 模块级旁路设计",
+      doi: { url: "https://doi.org/10.1234/example-bypass-2019", label: "10.1234/example-bypass-2019（示例 DOI）" },
+      pdfPath: "c:\\Users\\luo'qing'jing\\AppData\\Roaming\\Cursor\\User\\workspaceStorage\\4478df11c29f08a332492aeb4499114e\\pdfs\\92aadd68-e509-45d4-a85a-fbb8c1a1d6fd\\A SOLAR CELL MODULE WITH I... INDEPENDENT BYPASS DIODES_Bao Danwen Gu...nergy Science.pdf",
+      abstract: "围绕具有独立控制旁路二极管的光伏组件结构展开研究，分析不同旁路策略对组件在局部阴影下的性能表现，并探讨了模块级旁路控制的工程实现路径。",
+      tags: ["旁路二极管架构", "阴影容忍度", "组件级设计"]
+    },
+    {
+      id: 2,
+      shortLetter: "律",
+      title: "“十四五”是能源供应更足、韧性更强的五年",
+      authors: "律星光",
+      year: "2025",
+      source: "财经界, 2025(26): 6",
+      type: "宏观能源 · 政策与形势",
+      doi: { url: "https://doi.org/10.19887/j.cnki.cn11-4098/F.2025.26.004", label: "10.19887/j.cnki.cn11-4098/F.2025.26.004" },
+      pdfPath: "c:\\Users\\luo'qing'jing\\AppData\\Roaming\\Cursor\\User\\workspaceStorage\\4478df11c29f08a332492aeb4499114e\\pdfs\\a466fc5d-ab9c-4cca-8c03-f400caf207d3\\“十四五”是能源供应更足、韧性更强的五年_律星光.pdf",
+      abstract: "从国家层面分析“十四五”期间能源安全、供应韧性与新能源布局，为本项目在“双碳目标”与能源转型的大背景下定位提供政策与战略依据。",
+      tags: ["十四五规划", "双碳目标", "能源安全"]
+    },
+    {
+      id: 3,
+      shortLetter: "张",
+      title: "不同旁路二极管配置下光伏组件阴影耐受性定量计算",
+      authors: "张明锐",
+      year: "年限示意",
+      source: "期刊/会议示意",
+      type: "旁路配置 · 阴影耐受性",
+      doi: { url: "https://doi.org/10.1234/example-shadow-2018", label: "10.1234/example-shadow-2018（示例）" },
+      pdfPath: "c:\\Users\\luo'qing'jing\\AppData\\Roaming\\Cursor\\User\\workspaceStorage\\4478df11c29f08a332492aeb4499114e\\pdfs\\8bde6edd-54bc-4996-b73b-e477576cc88a\\不同旁路二极管配置下光伏组件阴影耐受性定量计算_张明锐.pdf",
+      abstract: "通过定量计算不同旁路二极管配置下光伏组件在阴影工况下的功率损失与热斑风险，为本项目中“旁路策略优化”和“阴影耐受性评估”提供理论基础。",
+      tags: ["旁路配置优化", "阴影耐受性", "功率损失分析"]
+    },
+    {
+      id: 4,
+      shortLetter: "Y",
+      title: "Analysis and Diagnosis of ... Failure in c-Si PV Module",
+      authors: "Yun Ping, 等",
+      year: "年限示意",
+      source: "国际期刊示意",
+      type: "英文 · 失效机理与诊断",
+      doi: { url: "https://doi.org/10.1234/example-failure-2017", label: "10.1234/example-failure-2017（示例）" },
+      pdfPath: "c:\\Users\\luo'qing'jing\\AppData\\Roaming\\Cursor\\User\\workspaceStorage\\4478df11c29f08a332492aeb4499114e\\pdfs\\a6e979f1-0e2a-4cce-8a64-a5848be03514\\Analysis and diagnosis of ... failure in c-Si PV module_Yun Ping.pdf",
+      abstract: "针对晶硅光伏组件的失效模式进行分析与诊断，涵盖热斑、焊点开裂、封装老化等，为本项目的“早期故障识别”与“多故障区分”提供参考。",
+      tags: ["失效分析", "故障诊断", "晶硅光伏"]
+    },
+    {
+      id: 5,
+      shortLetter: "杨",
+      title: "光伏全直流汇集系统场站级协同控制保护策略研究",
+      authors: "杨伟涛",
+      year: "年限示意",
+      source: "硕/博论文示意",
+      type: "系统级 · 协同控制与保护",
+      doi: { url: "https://doi.org/10.1234/example-dc-plant-2020", label: "10.1234/example-dc-plant-2020（示例）" },
+      pdfPath: "c:\\Users\\luo'qing'jing\\AppData\\Roaming\\Cursor\\User\\workspaceStorage\\4478df11c29f08a332492aeb4499114e\\pdfs\\02cbad55-a505-4572-9314-bb23a362dffe\\光伏全直流汇集系统场站级协同控制保护策略研究_杨伟涛.pdf",
+      abstract: "面向全直流汇集系统，研究场站级协同控制与保护策略，为本项目将组件级保护纳入电站整体保护体系提供系统视角。",
+      tags: ["全直流汇集", "协同控制", "保护策略"]
+    },
+    {
+      id: 6,
+      shortLetter: "业",
+      title: "光伏热斑效应及光伏阵列输出特性的仿真分析",
+      authors: "业睿",
+      year: "2014（示意）",
+      source: "电子测试（示意）",
+      type: "仿真 · 热斑与阵列输出",
+      doi: { url: "https://doi.org/10.1234/example-hotspot-sim-2014", label: "10.1234/example-hotspot-sim-2014（示例）" },
+      pdfPath: "c:\\Users\\luo'qing'jing\\AppData\\Roaming\\Cursor\\User\\workspaceStorage\\4478df11c29f08a332492aeb4499114e\\pdfs\\fc090272-ff37-483d-8b04-6e7310a33e5f\\光伏热斑效应及光伏阵列输出特性的仿真分析_业睿.pdf",
+      abstract: "通过仿真手段研究不同遮挡与热斑工况下阵列输出特性变化，为本项目中 I–V/P–V 曲线畸变特征提取提供参考。",
+      tags: ["热斑仿真", "阵列输出特性", "I–V / P–V 分析"]
+    },
+    {
+      id: 7,
+      shortLetter: "李",
+      title: "阴影条件下光伏组件旁路二极管优化配置研究",
+      authors: "李善寿",
+      year: "年限示意",
+      source: "期刊/会议示意",
+      type: "旁路优化 · 阴影工况",
+      doi: { url: "https://doi.org/10.1234/example-bypass-opt-2016", label: "10.1234/example-bypass-opt-2016（示例）" },
+      pdfPath: "c:\\Users\\luo'qing'jing\\AppData\\Roaming\\Cursor\\User\\workspaceStorage\\4478df11c29f08a332492aeb4499114e\\pdfs\\7e71d051-74eb-4896-8497-c6f26f877827\\阴影条件下光伏组件旁路二极管优化配置研究_李善寿.pdf",
+      abstract: "从阴影条件出发，系统研究不同旁路二极管配置方案对热斑风险与输出功率的影响，与本项目的 MOSFET 智能旁路形成呼应与对比。",
+      tags: ["旁路二极管", "阴影优化", "热斑防护"]
+    },
+    {
+      id: 8,
+      shortLetter: "王",
+      title: "光伏组件热斑效应智能化检测的综述及展望",
+      authors: "王道累, 等",
+      year: "2024（示意）",
+      source: "太阳能学报（示意）",
+      type: "综述 · 智能检测",
+      doi: { url: "https://doi.org/10.1234/example-review-2024", label: "10.1234/example-review-2024（示例）" },
+      pdfPath: "c:\\Users\\luo'qing'jing\\AppData\\Roaming\\Cursor\\User\\workspaceStorage\\4478df11c29f08a332492aeb4499114e\\pdfs\\d1847258-6a9a-438c-b161-bbac0b4b3fcc\\光伏组件热斑效应智能化检测的综述及展望_王道累.pdf",
+      abstract: "系统梳理了光伏组件热斑效应的检测技术发展脉络，从红外成像、电信号分析到智能算法，为本项目的“电信号早期诊断 + 机器学习”路线提供重要参考。",
+      tags: ["智能检测综述", "电信号诊断", "机器学习"]
+    },
+    {
+      id: 9,
+      shortLetter: "黄",
+      title: "光伏组件热斑效应研究",
+      authors: "黄盛娟",
+      year: "2015（示意）",
+      source: "硕/博论文示意",
+      type: "热斑机理 · 实验研究",
+      doi: { url: "https://doi.org/10.1234/example-hotspot-2015", label: "10.1234/example-hotspot-2015（示例）" },
+      pdfPath: "c:\\Users\\luo'qing'jing\\AppData\\Roaming\\Cursor\\User\\workspaceStorage\\4478df11c29f08a332492aeb4499114e\\pdfs\\8230f153-a029-420f-bb7e-1794fe8a4bfd\\光伏组件热斑效应研究_黄盛娟.pdf",
+      abstract: "从实验角度深入分析热斑产生机理、温升特性与对组件寿命的影响，为本项目的安全性分析与实验平台搭建提供理论支撑。",
+      tags: ["热斑机理", "实验测试", "温升特性"]
+    },
+    {
+      id: 10,
+      shortLetter: "刘",
+      title: "光伏组件热斑效应检测及仿真分析",
+      authors: "刘雪睛",
+      year: "2017（示意）",
+      source: "硕/博论文示意",
+      type: "检测方法 · 仿真分析",
+      doi: { url: "https://doi.org/10.1234/example-detect-2017", label: "10.1234/example-detect-2017（示例）" },
+      pdfPath: "c:\\Users\\luo'qing'jing\\AppData\\Roaming\\Cursor\\User\\workspaceStorage\\4478df11c29f08a332492aeb4499114e\\pdfs\\0607d2a8-4d8d-48cc-9a17-6d001309cfc6\\光伏组件热斑效应检测及仿真分析_刘雪睛.pdf",
+      abstract: "将热斑检测方法与仿真模型相结合，探讨不同监测手段的灵敏度与适用场景，为项目的算法验证与仿真平台设计提供参考。",
+      tags: ["热斑检测", "仿真分析", "模型验证"]
+    }
+  ];
+
+  const gridEl = document.getElementById('paperGrid');
+  let activeId = null;
+
+  function buildFileUrl(winPath) {
+    const url = 'file:///' + winPath.replace(/\\/g, '/');
+    return encodeURI(url);
+  }
+
+  function renderCards() {
+    gridEl.innerHTML = '';
+    papers.forEach((p) => {
+      const card = document.createElement('div');
+      card.className = 'paper-card';
+      card.dataset.id = p.id;
+
+      const cover = document.createElement('div');
+      cover.className = 'paper-cover';
+      cover.textContent = p.shortLetter || p.title.charAt(0);
+      const badge = document.createElement('span');
+      badge.className = 'pdf-badge';
+      badge.textContent = 'PDF';
+      cover.appendChild(badge);
+
+      const meta = document.createElement('div');
+      meta.className = 'paper-meta';
+
+      const title = document.createElement('div');
+      title.className = 'paper-title';
+      title.textContent = p.title;
+
+      const authors = document.createElement('div');
+      authors.className = 'paper-authors';
+      authors.textContent = p.authors + ' · ' + p.year;
+
+      const extra = document.createElement('div');
+      extra.className = 'paper-extra';
+      const srcSpan = document.createElement('span');
+      srcSpan.textContent = p.source;
+      const pill = document.createElement('span');
+      pill.className = 'pill';
+      pill.textContent = p.type;
+      extra.appendChild(srcSpan);
+      extra.appendChild(pill);
+
+      meta.appendChild(title);
+      meta.appendChild(authors);
+      meta.appendChild(extra);
+
+      card.appendChild(cover);
+      card.appendChild(meta);
+
+      card.addEventListener('click', () => selectPaper(p.id));
+      gridEl.appendChild(card);
+    });
+  }
+
+  const detailTitleEl = document.getElementById('detailTitle');
+  const detailInfoEl = document.getElementById('detailInfo');
+  const detailAbstractEl = document.getElementById('detailAbstract');
+  const detailTagsEl = document.getElementById('detailTags');
+  const openPdfBtn = document.getElementById('openPdfBtn');
+  const doiLinkEl = document.getElementById('doiLink');
+  const pdfIframe = document.getElementById('pdfIframe');
+  const pdfPlaceholder = document.getElementById('pdfPlaceholder');
+
+  function selectPaper(id) {
+    activeId = id;
+    document.querySelectorAll('.paper-card').forEach(c => {
+      c.classList.toggle('active', Number(c.dataset.id) === id);
+    });
+
+    const p = papers.find(x => x.id === id);
+    if (!p) return;
+
+    detailTitleEl.textContent = p.title;
+    detailInfoEl.textContent = `${p.authors} · ${p.year} · ${p.source}`;
+    detailAbstractEl.textContent = p.abstract || '';
+
+    detailTagsEl.innerHTML = '';
+    p.tags && p.tags.forEach(t => {
+      const span = document.createElement('span');
+      span.className = 'detail-tag';
+      span.textContent = t;
+      detailTagsEl.appendChild(span);
+    });
+
+    if (p.doi && p.doi.url) {
+      doiLinkEl.href = p.doi.url;
+      doiLinkEl.textContent = 'DOI：' + p.doi.label;
+      doiLinkEl.style.pointerEvents = 'auto';
+      doiLinkEl.style.opacity = '1';
+    } else {
+      doiLinkEl.href = 'javascript:void(0)';
+      doiLinkEl.textContent = 'DOI：暂无';
+      doiLinkEl.style.pointerEvents = 'none';
+      doiLinkEl.style.opacity = '0.6';
+    }
+
+    const fileUrl = buildFileUrl(p.pdfPath);
+    pdfIframe.style.display = 'block';
+    pdfPlaceholder.style.display = 'none';
+    pdfIframe.src = fileUrl;
+
+    openPdfBtn.disabled = false;
+    openPdfBtn.onclick = () => {
+      window.open(fileUrl, '_blank');
+    };
+  }
+
+  renderCards();
+  if (papers.length > 0) {
+    selectPaper(papers[0].id);
+  }
+
+  const trendDom = document.getElementById('trendChart');
+  const trendChart = echarts.init(trendDom);
+  const years = ['2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024'];
+  const counts = [8, 10, 13, 16, 20, 24, 30, 34, 38, 42];
+
+  const trendOption = {
+    backgroundColor: 'transparent',
+    grid: { left: '8%', right: '4%', top: 24, bottom: 24 },
+    xAxis: {
+      type: 'category',
+      data: years,
+      axisLine: { lineStyle: { color: '#9fa8da' } },
+      axisLabel: { color: '#c5cae9', fontSize: 10 }
+    },
+    yAxis: {
+      type: 'value',
+      axisLine: { lineStyle: { color: '#9fa8da' } },
+      splitLine: { lineStyle: { color: 'rgba(255,255,255,0.08)' } },
+      axisLabel: { color: '#c5cae9', fontSize: 10 }
+    },
+    tooltip: {
+      trigger: 'axis',
+      formatter: function (params) {
+        const p = params[0];
+        return '年份：' + p.axisValue + '<br/>文献数量（示意）：' + p.data;
+      }
+    },
+    series: [{
+      name: '发文量（示意）',
+      type: 'line',
+      data: counts,
+      smooth: true,
+      symbol: 'circle',
+      symbolSize: 5,
+      lineStyle: { width: 2, color: '#00e5ff' },
+      itemStyle: { color: '#00e5ff' },
+      areaStyle: { opacity: 0.16, color: '#00e5ff' }
+    }]
+  };
+  trendChart.setOption(trendOption);
+  window.addEventListener('resize', () => trendChart.resize());
+
+  const navbarEl = document.getElementById('navbar');
+  const backToTopEl = document.getElementById('backToTop');
+
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY || window.pageYOffset;
+    if (y > 40) {
+      navbarEl.classList.add('shrink');
+      backToTopEl.classList.add('visible');
+    } else {
+      navbarEl.classList.remove('shrink');
+      backToTopEl.classList.remove('visible');
+    }
+  });
+
+  backToTopEl.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+</body>
+</html>

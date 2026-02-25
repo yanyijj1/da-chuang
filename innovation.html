@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>光伏热斑主动防控系统 - 创新对比</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css">
+  <style>
+    :root {
+      --primary-gradient: linear-gradient(135deg, #0f9bff, #00d28a);
+      --primary-color: #0f9bff;
+      --bg-dark: #050816;
+      --text-main: #f5f7fb;
+      --text-sub: #c0c4d6;
+      --border-soft: rgba(255, 255, 255, 0.08);
+      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.45);
+      --radius-lg: 20px;
+      --accent: #ffb74d;
+      --bad: #ef5350;
+      --good: #66bb6a;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft YaHei", sans-serif;
+      background:
+        radial-gradient(circle at top, #1b2b46 0, #050816 45%, #02030a 100%),
+        repeating-linear-gradient(135deg, rgba(255,255,255,0.04) 0, rgba(255,255,255,0.04) 1px, transparent 1px, transparent 6px);
+      color: var(--text-main);
+    }
+    a { color: var(--primary-color); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .navbar {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(5, 8, 22, 0.92);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border-soft);
+    }
+    .nav-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 8px;
+      font-weight: 700; font-size: 18px;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      color: transparent;
+      white-space: nowrap;
+    }
+    .nav-logo span.sub {
+      font-size: 11px; font-weight: 400;
+      color: var(--text-sub);
+      background: none;
+      -webkit-background-clip: initial;
+    }
+    .nav-links {
+      display: flex; flex-wrap: wrap;
+      gap: 10px; justify-content: flex-end;
+    }
+    .nav-links a {
+      font-size: 13px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      color: var(--text-sub);
+      border: 1px solid transparent;
+      white-space: nowrap;
+      transition: all 0.18s ease-out;
+    }
+    .nav-links a:hover {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.16);
+      color: var(--text-main);
+    }
+    .nav-links a.active {
+      background: var(--primary-gradient);
+      color: #02030a;
+      font-weight: 600;
+    }
+
+    main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 24px 16px 40px;
+    }
+    section {
+      background:
+        radial-gradient(circle at top left, rgba(15,155,255,0.2), transparent 60%),
+        radial-gradient(circle at bottom right, rgba(0,214,158,0.18), transparent 60%),
+        #050816;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+      padding: 20px 18px 22px;
+    }
+
+    .tagline {
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-sub);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .tagline span.dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #00d28a;
+      box-shadow: 0 0 10px rgba(0,214,158,0.8);
+    }
+    h1 {
+      margin: 0 0 6px;
+      font-size: 22px;
+      font-weight: 750;
+    }
+    .subtitle {
+      font-size: 13px;
+      color: var(--text-sub);
+      margin-bottom: 14px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.7fr) minmax(0, 1.2fr);
+      gap: 16px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      margin-top: 6px;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    thead {
+      background: rgba(15,155,255,0.22);
+    }
+    th, td {
+      padding: 8px 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      vertical-align: top;
+    }
+    th {
+      text-align: center;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+    td:first-child {
+      font-weight: 600;
+      width: 90px;
+    }
+    tbody tr:nth-child(even) {
+      background: rgba(255,255,255,0.03);
+    }
+    tbody tr:hover {
+      background: rgba(15,155,255,0.12);
+      transition: background 0.15s ease-out;
+    }
+
+    .rating-row {
+      margin-top: 6px;
+      font-size: 11px;
+      color: var(--text-sub);
+      display: flex;
+      gap: 4px;
+      align-items: center;
+    }
+    .rating-label {
+      width: 60px;
+    }
+    .rating-bar {
+      position: relative;
+      flex: 1;
+      height: 4px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.12);
+      overflow: hidden;
+    }
+    .rating-fill {
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      border-radius: 999px;
+    }
+    .rating-bad { background: var(--bad); }
+    .rating-mid { background: #ffca28; }
+    .rating-good { background: var(--good); }
+
+    .rating-icon {
+      width: 18px;
+      text-align: center;
+      color: var(--text-sub);
+    }
+
+    .right-card {
+      border-radius: 16px;
+      background: rgba(5,8,22,0.95);
+      border: 1px solid rgba(255,255,255,0.18);
+      padding: 10px 12px 12px;
+      font-size: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      animation: floatIn 0.6s ease-out;
+    }
+    .right-card h2 {
+      margin: 0 0 4px;
+      font-size: 15px;
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+    .right-card h2 i { color: var(--accent); }
+    .right-card p {
+      margin: 2px 0;
+      color: var(--text-sub);
+      line-height: 1.7;
+    }
+    .highlight-list {
+      margin: 4px 0 0 16px;
+      padding: 0;
+      color: var(--text-sub);
+      line-height: 1.6;
+    }
+    .highlight-list li + li { margin-top: 3px; }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .pill-highlight {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(15,155,255,0.16);
+      border: 1px solid rgba(255,255,255,0.2);
+      font-size: 11px;
+      color: var(--text-sub);
+    }
+    .pill-highlight i { color: var(--primary-color); }
+
+    @keyframes floatIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 960px) {
+      .layout {
+        grid-template-columns: minmax(0,1fr);
+      }
+    }
+    @media (max-width: 840px) {
+      .nav-inner { flex-direction: column; align-items: flex-start; }
+      section { padding: 18px 12px 20px; }
+      table { font-size: 11px; }
+    }
+  </style>
+</head>
+<body>
+<header class="navbar">
+  <div class="nav-inner">
+    <div class="nav-logo">
+      PV Hotspot Guard
+      <span class="sub">东北大学 第二十批大学生创新训练项目</span>
+    </div>
+    <nav class="nav-links">
+      <a href="index.html">首页</a>
+      <a href="iv-curve.html">I-V 曲线</a>
+      <a href="hotspot-fluctuation.html">波动热斑</a>
+      <a href="iv-table.html">伏安数据表</a>
+      <a href="papers.html">论文收录</a>
+      <a href="innovation.html" class="active">创新对比</a>
+      <a href="roadmap.html">技术路线</a>
+      <a href="dynamic-demo.html">动态演示</a>
+      <a href="team.html">团队与成果</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section>
+    <div class="tagline">
+      <span class="dot"></span>
+      东北大学第二十批大创项目 · 中期答辩展示
+    </div>
+    <h1>创新点对比：传统方案 vs 电信号早期诊断 + 智能旁路</h1>
+    <p class="subtitle">
+      从响应速度、预警能力、成本部署、发电效率与智能化程度五个维度，对比传统旁路二极管、红外热成像与本项目方案，
+      并通过“评分条 + 图标”直观呈现综合优势。
+    </p>
+
+    <div class="layout">
+      <div>
+        <table>
+          <thead>
+            <tr>
+              <th>指标</th>
+              <th>传统旁路二极管</th>
+              <th>红外热成像</th>
+              <th>本项目：电信号早期诊断 + 智能旁路</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>响应速度</td>
+              <td>过流后 ms 级导通，是“最后防线”，动作粗糙且不可调，存在滞后性。</td>
+              <td>依赖人工/无人机巡检，分钟～天级，难以连续在线监测。</td>
+              <td>基于 I–V 与功率信号在线分析，可在 ms 级完成热斑风险评估并触发 PWM 控制。</td>
+            </tr>
+            <tr>
+              <td>预警能力</td>
+              <td>无显式预警，仅在严重失配时被动动作，无法区分轻重缓急。</td>
+              <td>可定位明显热斑，但多在温度已显著升高后发现。</td>
+              <td>利用拐点提前、电流台阶等电信号特征，实现热斑形成前的风险分级与预警。</td>
+            </tr>
+            <tr>
+              <td>成本与部署</td>
+              <td>器件成本低，已广泛应用于接线盒，扩展功能受限。</td>
+              <td>设备与运维成本高，适合作为定期巡检手段。</td>
+              <td>在组件/接线盒级集成传感、电路与 MCU，边缘计算为主，部署灵活且成本可控。</td>
+            </tr>
+            <tr>
+              <td>对发电效率影响</td>
+              <td>导通后整串旁路，电压跌落明显，易出现“过度保护”导致效率下降。</td>
+              <td>不直接干预运行，对实时效率无影响，但也无法及时控制风险。</td>
+              <td>通过自适应 PWM 细粒度控制旁路程度，仅旁路有风险单元，在安全与发电量之间动态平衡。</td>
+            </tr>
+            <tr>
+              <td>智能化与可拓展性</td>
+              <td>无数据采集与决策能力，不支持远程升级与模型演进。</td>
+              <td>依赖人工解读与离线分析，自动化程度有限。</td>
+              <td>构建“感知–决策–执行”闭环，预留模型更新与远程运维接口，具备持续演进能力。</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- 评分行 -->
+        <div class="rating-row">
+          <span class="rating-label">安全性</span>
+          <div class="rating-bar">
+            <div class="rating-fill rating-mid" style="width:33%;"></div>
+          </div>
+          <div class="rating-bar">
+            <div class="rating-fill rating-mid" style="width:50%;"></div>
+          </div>
+          <div class="rating-bar">
+            <div class="rating-fill rating-good" style="width:90%;"></div>
+          </div>
+          <span class="rating-icon"><i class="fas fa-shield-alt"></i></span>
+        </div>
+        <div class="rating-row">
+          <span class="rating-label">预警能力</span>
+          <div class="rating-bar">
+            <div class="rating-fill rating-bad" style="width:25%;"></div>
+          </div>
+          <div class="rating-bar">
+            <div class="rating-fill rating-mid" style="width:55%;"></div>
+          </div>
+          <div class="rating-bar">
+            <div class="rating-fill rating-good" style="width:95%;"></div>
+          </div>
+          <span class="rating-icon"><i class="fas fa-bell"></i></span>
+        </div>
+        <div class="rating-row">
+          <span class="rating-label">效率保持</span>
+          <div class="rating-bar">
+            <div class="rating-fill rating-mid" style="width:45%;"></div>
+          </div>
+          <div class="rating-bar">
+            <div class="rating-fill rating-good" style="width:80%;"></div>
+          </div>
+          <div class="rating-bar">
+            <div class="rating-fill rating-good" style="width:90%;"></div>
+          </div>
+          <span class="rating-icon"><i class="fas fa-bolt"></i></span>
+        </div>
+        <div class="rating-row">
+          <span class="rating-label">工程可行性</span>
+          <div class="rating-bar">
+            <div class="rating-fill rating-good" style="width:90%;"></div>
+          </div>
+          <div class="rating-bar">
+            <div class="rating-fill rating-mid" style="width:60%;"></div>
+          </div>
+          <div class="rating-bar">
+            <div class="rating-fill rating-good" style="width:80%;"></div>
+          </div>
+          <span class="rating-icon"><i class="fas fa-industry"></i></span>
+        </div>
+      </div>
+
+      <div class="right-card">
+        <h2><i class="fas fa-lightbulb"></i> 本项目的关键创新指向</h2>
+        <p>
+          与传统方案相比，本项目并非简单增加一个新器件，而是围绕
+          <b>“电信号早期诊断 + 智能旁路执行”</b>，在算法、控制与硬件三个层面协同设计，
+          形成可工程化的组件级主动防控方案。
+        </p>
+        <ul class="highlight-list">
+          <li><b>从“温度后验”到“电信号前瞻”：</b> 利用 I–V 曲线与功率波动等电信号特征，实现热斑形成前的风险识别与分级。</li>
+          <li><b>从“固定阈值”到“自适应策略”：</b> 结合数据驱动与经验规则，根据现场运行数据动态调整保护阈值与旁路强度。</li>
+          <li><b>从“被动元件”到“智能模块”：</b> 将传感、诊断与执行集成于组件/接线盒级智能模块，具备远程升级与持续演进能力。</li>
+        </ul>
+        <div class="pill-row">
+          <span class="pill-highlight">
+            <i class="fas fa-brain"></i>
+            电信号早期诊断
+          </span>
+          <span class="pill-highlight">
+            <i class="fas fa-waveform-lines"></i>
+            自适应 PWM 旁路
+          </span>
+          <span class="pill-highlight">
+            <i class="fas fa-microchip"></i>
+            组件级智能防护模块
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+</body>
+</html>

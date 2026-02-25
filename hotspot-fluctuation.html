@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>光伏热斑主动防控系统 - 波动热斑</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.0/dist/echarts.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css">
+  <style>
+    :root {
+      --primary-gradient: linear-gradient(135deg, #0f9bff, #00d28a);
+      --primary-color: #0f9bff;
+      --bg-dark: #050816;
+      --text-main: #f5f7fb;
+      --text-sub: #c0c4d6;
+      --border-soft: rgba(255, 255, 255, 0.08);
+      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.45);
+      --radius-lg: 20px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft YaHei", sans-serif;
+      background: radial-gradient(circle at top, #18253a 0, #050816 45%, #02030a 100%);
+      color: var(--text-main);
+    }
+    a { color: var(--primary-color); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .navbar {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(5, 8, 22, 0.92);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border-soft);
+    }
+    .nav-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 8px;
+      font-weight: 700; font-size: 18px;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      color: transparent;
+      white-space: nowrap;
+    }
+    .nav-logo span.sub {
+      font-size: 11px; font-weight: 400;
+      color: var(--text-sub);
+      background: none;
+      -webkit-background-clip: initial;
+    }
+    .nav-links {
+      display: flex; flex-wrap: wrap;
+      gap: 10px; justify-content: flex-end;
+    }
+    .nav-links a {
+      font-size: 13px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      color: var(--text-sub);
+      border: 1px solid transparent;
+      white-space: nowrap;
+      transition: all 0.18s ease-out;
+    }
+    .nav-links a:hover {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.16);
+      color: var(--text-main);
+    }
+    .nav-links a.active {
+      background: var(--primary-gradient);
+      color: #02030a;
+      font-weight: 600;
+    }
+
+    main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 28px 16px 40px;
+    }
+    section {
+      background:
+        radial-gradient(circle at top left, rgba(15,155,255,0.16), transparent 60%),
+        radial-gradient(circle at bottom right, rgba(0,214,158,0.16), transparent 60%),
+        #050816;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+      padding: 24px 22px 26px;
+    }
+    h1 {
+      margin: 0 0 8px;
+      font-size: 22px;
+      font-weight: 700;
+    }
+    .subtitle {
+      font-size: 13px;
+      color: var(--text-sub);
+      margin-bottom: 16px;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 2.3fr) minmax(0, 1.7fr);
+      gap: 18px;
+      align-items: flex-start;
+    }
+    .chart-wrapper {
+      border-radius: 16px;
+      background: rgba(5, 8, 22, 0.92);
+      border: 1px solid rgba(255,255,255,0.16);
+      padding: 12px 14px 12px;
+    }
+    .chart-header {
+      display: flex; align-items: center; gap: 8px;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+    .chart-header i { color: #00e676; }
+    .chart-sub {
+      font-size: 12px;
+      color: var(--text-sub);
+      margin-bottom: 6px;
+    }
+    #pmaxChart {
+      width: 100%;
+      height: 340px;
+    }
+    .desc {
+      margin-top: 8px;
+      font-size: 12px;
+      color: var(--text-sub);
+      line-height: 1.7;
+    }
+    .side-card {
+      border-radius: 16px;
+      background: rgba(5, 8, 22, 0.92);
+      border: 1px solid rgba(255,255,255,0.16);
+      padding: 10px 12px 12px;
+      font-size: 12px;
+    }
+    .side-card h3 {
+      margin: 0 0 6px;
+      font-size: 14px;
+      display: flex; gap: 6px; align-items: center;
+    }
+    .side-card h3 i { color: #ffb74d; }
+    .side-card ul {
+      margin: 4px 0 0 18px;
+      padding: 0;
+      line-height: 1.6;
+      color: var(--text-sub);
+    }
+    .side-card ul li + li { margin-top: 3px; }
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: minmax(0,1fr); }
+      #pmaxChart { height: 300px; }
+    }
+    @media (max-width: 840px) {
+      .nav-inner { flex-direction: column; align-items: flex-start; }
+      section { padding: 20px 16px 22px; }
+    }
+  </style>
+</head>
+<body>
+<header class="navbar">
+  <div class="nav-inner">
+    <div class="nav-logo">
+      PV Hotspot Guard
+      <span class="sub">NEU 大创项目</span>
+    </div>
+    <nav class="nav-links">
+      <a href="index.html">首页</a>
+      <a href="iv-curve.html">I-V 曲线</a>
+      <a href="hotspot-fluctuation.html" class="active">波动热斑</a>
+      <a href="iv-table.html">伏安数据表</a>
+      <a href="papers.html">论文收录</a>
+      <a href="innovation.html">创新对比</a>
+      <a href="roadmap.html">技术路线</a>
+      <a href="dynamic-demo.html">动态演示<
+      <a href="team.html">团队与成果</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section>
+    <h1>遮挡率–最大功率点（P<sub>max</sub>）特性与波动热斑</h1>
+    <p class="subtitle">
+      通过模拟不同遮挡率下的 P<sub>max</sub> 变化，展示热斑严重程度与输出功率之间的非线性关系，为制定“多级响应策略”提供数据基础。
+    </p>
+
+    <div class="layout">
+      <div class="chart-wrapper">
+        <div class="chart-header">
+          <i class="fas fa-wave-square"></i>
+          遮挡率–P<sub>max</sub> 曲线
+        </div>
+        <div class="chart-sub">
+          遮挡率(%) = [0, 10, 20, 30, 40, 50, 60, 70, 80]，
+          功率(W) = [180, 172, 158, 135, 108, 76, 45, 20, 5]。
+        </div>
+        <div id="pmaxChart"></div>
+        <div class="desc">
+          可以看到：低遮挡阶段（0%～20%）功率缓慢下降，而在 30% 之后下降趋势明显加快，
+          80% 遮挡时几乎丧失发电能力。这种“先平缓、后陡降”的曲线形态，非常适合作为热斑
+          <b>分级控制阈值</b> 的依据：在轻度遮挡时提前调节工作点，在中重度遮挡时果断执行旁路。
+        </div>
+      </div>
+
+      <div class="side-card">
+        <h3><i class="fas fa-layer-group"></i> 工程意义与策略设计</h3>
+        <ul>
+          <li><b>分级响应：</b> 将遮挡率或 P<sub>max</sub> 退化程度划分为多档（如正常、轻度、中度、严重），对应不同的控制策略强度。</li>
+          <li><b>联动 I–V 曲线：</b> 在功率开始显著退化前，通常已经可以在 I–V 曲线中观察到拐点提前、台阶加剧等先兆特征。</li>
+          <li><b>抑制波动热斑：</b> 对于云影快速掠过等“波动热斑”场景，可以结合时间维度，对短时尖峰进行平滑处理，避免频繁启停旁路。</li>
+          <li><b>提高运维决策质量：</b> 长期记录遮挡率–功率数据，可为运维方优化阵列布置、清洗周期、植被管理等提供量化依据。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+  const shading = [0, 10, 20, 30, 40, 50, 60, 70, 80];
+  const power = [180, 172, 158, 135, 108, 76, 45, 20, 5];
+
+  const pDom = document.getElementById('pmaxChart');
+  const pChart = echarts.init(pDom);
+
+  const option = {
+    backgroundColor: 'transparent',
+    tooltip: {
+      trigger: 'axis',
+      formatter: function (params) {
+        const p = params[0];
+        return '遮挡率: ' + p.axisValue + ' %<br/>' +
+               p.marker + '功率: ' + p.data + ' W';
+      }
+    },
+    dataZoom: [
+    {
+      type: 'inside',
+      xAxisIndex: 0,
+      filterMode: 'none'
+    },
+    {
+      type: 'slider',
+      xAxisIndex: 0,
+      height: 16,
+      bottom: 8,
+      handleSize: '80%'
+    }
+  ],
+    grid: { left: '10%', right: '6%', top: 40, bottom: 40 },
+    xAxis: {
+      type: 'category',
+      name: '遮挡率 / %',
+      data: shading,
+      axisLine: { lineStyle: { color: '#9fa8da' } },
+      axisLabel: { color: '#c5cae9' },
+      nameTextStyle: { color: '#c5cae9' }
+    },
+    yAxis: {
+      type: 'value',
+      name: '最大功率 / W',
+      axisLine: { lineStyle: { color: '#9fa8da' } },
+      splitLine: { lineStyle: { color: 'rgba(255,255,255,0.08)' } },
+      axisLabel: { color: '#c5cae9' },
+      nameTextStyle: { color: '#c5cae9' }
+    },
+    series: [{
+      name: 'Pmax',
+      type: 'line',
+      data: power,
+      smooth: true,
+      symbol: 'diamond',
+      symbolSize: 6,
+      lineStyle: { width: 2.4, color: '#00c853' },
+      itemStyle: { color: '#00c853' },
+      areaStyle: { opacity: 0.1, color: '#00c853' }
+    }]
+  };
+
+  pChart.setOption(option);
+  window.addEventListener('resize', () => pChart.resize());
+</script>
+</body>
+</html>

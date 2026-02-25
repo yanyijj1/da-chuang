@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>光伏热斑主动防控系统 - 伏安数据表</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css">
+  <style>
+    :root {
+      --primary-gradient: linear-gradient(135deg, #0f9bff, #00d28a);
+      --primary-color: #0f9bff;
+      --bg-dark: #050816;
+      --text-main: #f5f7fb;
+      --text-sub: #c0c4d6;
+      --border-soft: rgba(255, 255, 255, 0.08);
+      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.45);
+      --radius-lg: 20px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft YaHei", sans-serif;
+      background: radial-gradient(circle at top, #18253a 0, #050816 45%, #02030a 100%);
+      color: var(--text-main);
+    }
+    a { color: var(--primary-color); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .navbar {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(5, 8, 22, 0.92);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border-soft);
+    }
+    .nav-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 8px;
+      font-weight: 700; font-size: 18px;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      color: transparent;
+      white-space: nowrap;
+    }
+    .nav-logo span.sub {
+      font-size: 11px; font-weight: 400;
+      color: var(--text-sub);
+      background: none;
+      -webkit-background-clip: initial;
+    }
+    .nav-links {
+      display: flex; flex-wrap: wrap;
+      gap: 10px; justify-content: flex-end;
+    }
+    .nav-links a {
+      font-size: 13px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      color: var(--text-sub);
+      border: 1px solid transparent;
+      white-space: nowrap;
+      transition: all 0.18s ease-out;
+    }
+    .nav-links a:hover {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.16);
+      color: var(--text-main);
+    }
+    .nav-links a.active {
+      background: var(--primary-gradient);
+      color: #02030a;
+      font-weight: 600;
+    }
+
+    main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 28px 16px 40px;
+    }
+    section {
+      background: radial-gradient(circle at top left, rgba(15,155,255,0.16), transparent 60%),
+                  radial-gradient(circle at bottom right, rgba(0,214,158,0.16), transparent 60%),
+                  #050816;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+      padding: 24px 22px 26px;
+    }
+    h1 {
+      margin: 0 0 8px;
+      font-size: 22px;
+      font-weight: 700;
+    }
+    .subtitle {
+      font-size: 13px;
+      color: var(--text-sub);
+      margin-bottom: 16px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      border-radius: 16px;
+      overflow: hidden;
+      margin-top: 6px;
+    }
+    thead {
+      background: rgba(15,155,255,0.2);
+    }
+    th, td {
+      padding: 8px 10px;
+      text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    th {
+      font-weight: 600;
+      color: var(--text-main);
+    }
+    tbody tr:nth-child(even) {
+      background: rgba(255,255,255,0.03);
+    }
+    tbody tr:hover {
+      background: rgba(15,155,255,0.12);
+    }
+    .note {
+      margin-top: 10px;
+      font-size: 12px;
+      color: var(--text-sub);
+    }
+    @media (max-width: 840px) {
+      .nav-inner { flex-direction: column; align-items: flex-start; }
+      section { padding: 20px 12px 22px; }
+      table { font-size: 11px; }
+    }
+  </style>
+</head>
+<body>
+<header class="navbar">
+  <div class="nav-inner">
+    <div class="nav-logo">
+      PV Hotspot Guard
+      <span class="sub">NEU 大创项目</span>
+    </div>
+    <nav class="nav-links">
+      <a href="index.html">首页</a>
+      <a href="iv-curve.html">I-V 曲线</a>
+      <a href="hotspot-fluctuation.html">波动热斑</a>
+      <a href="iv-table.html" class="active">伏安数据表</a>
+      <a href="papers.html">论文收录</a>
+      <a href="innovation.html">创新对比</a>
+      <a href="roadmap.html">技术路线</a>
+      <a href="dynamic-demo.html">动态演示
+      <a href="team.html">团队与成果</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section>
+    <h1>伏安特性数据表</h1>
+    <p class="subtitle">
+      以表格形式列出相同电压点下的“正常电流”和“热斑电流”，方便进行曲线拟合、特征工程和对比分析。
+    </p>
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:12px;">
+  <div>
+    <label>搜索电压 / 电流：</label>
+    <input id="ivSearch" type="text" placeholder="输入数值过滤"
+      style="padding:3px 6px;border-radius:6px;border:1px solid rgba(255,255,255,0.25);background:rgba(0,0,0,0.3);color:#f5f7fb;font-size:12px;">
+  </div>
+  <button id="ivDownload"
+    style="padding:4px 9px;border-radius:999px;border:1px solid rgba(255,255,255,0.3);background:rgba(5,8,22,0.9);color:#f5f7fb;font-size:11px;cursor:pointer;">
+    导出 CSV
+  </button>
+</div>
+    <table>
+      <thead>
+  <tr>
+    <th data-sort-key="index">序号</th>
+    <th data-sort-key="voltage">电压 V</th>
+    <th data-sort-key="normal">正常电流 A</th>
+    <th data-sort-key="hotspot">热斑电流 A</th>
+  </tr>
+</thead>
+      <tbody>
+        <tr><td>1</td><td>0</td><td>8.2</td><td>6.5</td></tr>
+        <tr><td>2</td><td>5</td><td>8.1</td><td>6.4</td></tr>
+        <tr><td>3</td><td>10</td><td>8.0</td><td>6.3</td></tr>
+        <tr><td>4</td><td>12</td><td>7.9</td><td>6.1</td></tr>
+        <tr><td>5</td><td>14</td><td>7.8</td><td>5.5</td></tr>
+        <tr><td>6</td><td>16</td><td>7.5</td><td>4.2</td></tr>
+        <tr><td>7</td><td>17</td><td>6.8</td><td>3.0</td></tr>
+        <tr><td>8</td><td>18</td><td>5.5</td><td>1.8</td></tr>
+        <tr><td>9</td><td>19</td><td>4.0</td><td>0.9</td></tr>
+        <tr><td>10</td><td>20</td><td>2.2</td><td>0.4</td></tr>
+        <tr><td>11</td><td>21</td><td>0.8</td><td>0.1</td></tr>
+        <tr><td>12</td><td>22</td><td>0.1</td><td>0.0</td></tr>
+      </tbody>
+    </table>
+
+    <p class="note">
+      可基于上述数据计算瞬时功率 P=U×I，进一步构建 P–V 曲线，提取最大功率点，作为机器学习模型的特征输入，与
+      I–V 曲线形态特征一起用于热斑早期诊断。
+    </p>
+  </section>
+</main>
+<script>
+  (function() {
+    const table = document.querySelector('table');
+    const tbody = table.querySelector('tbody');
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    const searchInput = document.getElementById('ivSearch');
+    const downloadBtn = document.getElementById('ivDownload');
+
+    table.querySelectorAll('th[data-sort-key]').forEach((th, idx) => {
+      let asc = true;
+      th.style.cursor = 'pointer';
+      th.addEventListener('click', () => {
+        const colIndex = idx;
+        const sorted = [...rows].sort((a, b) => {
+          const av = a.children[colIndex].textContent.trim();
+          const bv = b.children[colIndex].textContent.trim();
+          const na = parseFloat(av), nb = parseFloat(bv);
+          const valA = isNaN(na) ? av : na;
+          const valB = isNaN(nb) ? bv : nb;
+          if (valA < valB) return asc ? -1 : 1;
+          if (valA > valB) return asc ? 1 : -1;
+          return 0;
+        });
+        asc = !asc;
+        tbody.innerHTML = '';
+        sorted.forEach(r => tbody.appendChild(r));
+      });
+    });
+
+    searchInput && searchInput.addEventListener('input', () => {
+      const q = searchInput.value.trim().toLowerCase();
+      rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        row.style.display = text.includes(q) ? '' : 'none';
+      });
+    });
+
+    downloadBtn && downloadBtn.addEventListener('click', () => {
+      let csv = '';
+      table.querySelectorAll('tr').forEach(tr => {
+        const cells = Array.from(tr.children).map(td => `"${td.textContent.trim()}"`);
+        csv += cells.join(',') + '\n';
+      });
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'iv-data.csv';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+  })();
+</script>
+</body>
+</html>
